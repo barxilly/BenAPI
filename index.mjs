@@ -127,10 +127,7 @@ app.get("/wifispeed", (req, res) => {
                 return;
             }
         }
-
-        exec("speedtest --accept-license");
-
-        exec("speedtest -f json-pretty", (err, stdout, stderr) => {
+        exec("speedtest --accept-license && speedtest -f json-pretty", (err, stdout, stderr) => {
             if (err) {
                 console.error(err);
                 res.send("Error:\n" + err);
