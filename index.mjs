@@ -43,6 +43,8 @@ app.get("/currentregion", (req, res) => {
     res.send(region.region);
 });
 
+app.po
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
