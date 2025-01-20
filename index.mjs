@@ -43,8 +43,22 @@ app.get("/currentregion", (req, res) => {
     res.send(region.region);
 });
 
-app.po
+app.post("/region", (req, res) => {
+    if (authorise(req, res)) {
+        res.send("Region updated");
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+function authorise(req, res) {
+    console.log(req.headers);
+    if (process.env.APP_KEYS.split(",").includes(req.headers.authorization.split(" ")[1])) {
+        return true;
+    } else {
+        res.status(403).send("Forbidden");
+        return false;
+    }
+}
