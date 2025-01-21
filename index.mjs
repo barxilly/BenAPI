@@ -16,7 +16,7 @@ const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 60,
     message: "You've been rate limited. Wtf are you even doing?",
-    keyGenerator: (req) => req.ip
+    keyGenerator: (req) => req.headers['cf-connecting-ip'] || req.ip
 });
 
 app.use(limiter);
