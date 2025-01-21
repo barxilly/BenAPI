@@ -168,31 +168,53 @@ app.get("/currentregion", (req, res) => {
     });
 });
 
+const weatherCacheFilePath = 'weatherCache.json';
+
 app.get("/weather", (req, res) => {
-    // Get the region
-    fs.readFile("./region.json", (err, data) => {
-        if (err) {
-            console.error(err);
-            res.send("Error:\n" + err);
-            return;
-        } else {
-            // Get the weather
-            axios
-                .get(
-                    `http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=${JSON.parse(data).region}`,
-                )
-                .then((response) => {
-                    res.json({
-                        condition: response.data.current.condition.text,
-                        temp: response.data.current.temp_c,
-                        is_day: response.data.current.is_day,
-                    });
-                })
-                .catch((error) => {
-                    console.error(error);
-                    res.send("Error:\n" + error);
-                });
+    fs.readFile(weatherCacheFilePath, 'utf8', (err, data) => {
+        const now = new Date();
+        if (!err) {
+            const cache = JSON.parse(data);
+            if (cache.timestamp && (now - new Date(cache.timestamp)) < 5 * 60 * 1000) {
+                // Cache is less than 5 minutes old
+                res.status(200).json(cache.data);
+                return;
+            }
         }
+        // Get the region
+        fs.readFile("./region.json", (err, data) => {
+            if (err) {
+                console.error(err);
+                res.send("Error:\n" + err);
+                return;
+            } else {
+                // Get the weather
+                axios
+                    .get(
+                        `http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=${JSON.parse(data).region}`,
+                    )
+                    .then((response) => {
+                        const result = {
+                            condition: response.data.current.condition.text,
+                            temp: response.data.current.temp_c,
+                            is_day: response.data.current.is_day,
+                        };
+
+                        // Update cache
+                        fs.writeFile(weatherCacheFilePath, JSON.stringify({ timestamp: now, data: result }), (err) => {
+                            if (err) {
+                                console.error(err);
+                            }
+                        });
+
+                        res.status(200).json(result);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        res.send("Error:\n" + error);
+                    });
+            }
+        });
     });
 });
 
