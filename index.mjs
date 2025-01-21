@@ -15,7 +15,8 @@ const port = 420;
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 60,
-    message: "You've been rate limited. Wtf are you even doing?"
+    message: "You've been rate limited. Wtf are you even doing?",
+    keyGenerator: (req) => req.ip
 });
 
 app.use(limiter);
@@ -25,40 +26,40 @@ app.get("/", (req, res) => {
         res.send(`
             <html>
                 <body style="font-family: monospace; background-color: rebeccapurple;">
-                    <h1 style="color: lime;">Welcome to bAPI</h1>
+                    <h1 style="color: lime;">Welcome to benAPI</h1>
                     <h2 style="color: lightblue;">Available endpoints:</h2>
-                    <p><span style="color: orange;">GET</span> <a href="/status" style="color: yellow;">/status</a><span style="color: white;"> - The server's status</span></p>
+                    <p><span style="color: orange;">GET</span> <a href="/status" style="color: yellow;">/status</a><span style="color: white;"> - Ben's status</span></p>
                     <p><span style="color: orange;">GET</span> <a href="/freemem" style="color: yellow;">/freemem</a><span style="color: white;"> - The server's currently free RAM</span></p>
-                    <p><span style="color: orange;">GET</span> <a href="/currentregion" style="color: yellow;">/currentregion</a><span style="color: white;"> - The server's current region</span></p>
+                    <p><span style="color: orange;">GET</span> <a href="/currentregion" style="color: yellow;">/currentregion</a><span style="color: white;"> - Ben's current region</span></p>
                     <p><span style="color: orange;">GET</span> <a href="/wifispeed" style="color: yellow;">/wifispeed</a><span style="color: white;"> - The server's current wifi speed</span></p>
-                    <p><span style="color: orange;">GET</span> <a href="/weather" style="color: yellow;">/weather</a><span style="color: white;"> - The current weather in the server's region</span></p>
+                    <p><span style="color: orange;">GET</span> <a href="/weather" style="color: yellow;">/weather</a><span style="color: white;"> - The current weather in Ben's region</span></p>
                     <p><span style="color: orange;">GET</span> <a href="/processor" style="color: yellow;">/processor</a><span style="color: white;"> - The server's processor</span></p>
                     <p><span style="color: orange;">GET</span> <a href="/connecteddrives" style="color: yellow;">/connecteddrives</a><span style="color: white;"> - The server's connected drives</span></p>
                     <p><span style="color: orange;">GET</span> <a href="/currentos" style="color: yellow;">/currentos</a><span style="color: white;"> - The server's current operating system</span></p>
-                    <p><span style="color: orange;">POST</span> <span style="color: yellow;">/region</span><span style="color: white;"> - Set the server's current region (Private)</span></p>
+                    <p><span style="color: orange;">POST</span> <span style="color: yellow;">/region</span><span style="color: white;"> - Set Ben's current region (Private)</span></p>
                 </body>
             </html>
         `);
     } else {
         res.send(
-            chalk.green("Welcome to bAPI") +
+            chalk.green("Welcome to benAPI") +
             "\n" +
             chalk.blueBright("Available endpoints:\n") +
             chalk.redBright("GET ") +
             chalk.yellow("/status") +
-            chalk.white(" - The server's status\n") +
+            chalk.white(" - Ben's status\n") +
             chalk.redBright("GET ") +
             chalk.yellow("/freemem") +
             chalk.white(" - The server's currently free RAM\n") +
             chalk.redBright("GET ") +
             chalk.yellow("/currentregion") +
-            chalk.white(" - The server's current region\n") +
+            chalk.white(" - Ben's current region\n") +
             chalk.redBright("GET ") +
             chalk.yellow("/wifispeed") +
             chalk.white(" - The server's current wifi speed\n") +
             chalk.redBright("GET ") +
             chalk.yellow("/weather") +
-            chalk.white(" - The current weather in the server's region\n") +
+            chalk.white(" - The current weather in Ben's region\n") +
             chalk.redBright("GET ") +
             chalk.yellow("/processor") +
             chalk.white(" - The server's processor\n") +
@@ -70,7 +71,7 @@ app.get("/", (req, res) => {
             chalk.white(" - The server's current operating system\n") +
             chalk.redBright("POST ") +
             chalk.yellow("/region") +
-            chalk.white(" - Set the server's current region (Private)\n"),
+            chalk.white(" - Set Ben's current region (Private)\n"),
         );
     }
 });
