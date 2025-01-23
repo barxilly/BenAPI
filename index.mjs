@@ -382,7 +382,7 @@ function authorise(req, res) {
         return false;
     }
     console.log(req.headers)
-    const authHeader = req.headers.authorization || req.headers.auth;
+    const authHeader = req.headers.authorization || req.headers.auth || req.data.authorization || req.data.auth;
     if (authHeader && authHeader.split(" ").length > 1 && process.env.APP_KEYS.split(",").includes(authHeader.split(" ")[1])) {
         return true;
     } else {

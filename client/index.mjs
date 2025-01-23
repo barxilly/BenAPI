@@ -152,7 +152,11 @@ async function main() {
                         const apiKey = process.env.API_KEY;
                         axios.post(`${serverUrl}/status`, {
                                 headers: {
-                                    Authorization: 'Bearer ' + apiKey,
+                                    'Authorization': 'Bearer ' + apiKey,
+                                    status: status
+                                },
+                                data: {
+                                    'Authorization': 'Bearer ' + apiKey,
                                     status: status
                                 }
                             })
