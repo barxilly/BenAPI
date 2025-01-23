@@ -1,0 +1,10 @@
+./node_modules
+region.json
+.env
+requests.log
+status.json
+wifiSpeedCache.json
+weatherCache.json
+error.json
+message.json
+yarn.lock
