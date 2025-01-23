@@ -258,6 +258,38 @@ app.get("/processor", (req, res) => {
   res.json(proc);
 });
 
+app.get("/processortemp", (req, res) => {
+  if (os.platform() === "win32") {
+    exec(
+      "wmic /namespace:\\\\root\\wmi PATH MSAcpi_ThermalZoneTemperature get CurrentTemperature",
+      (err, stdout, stderr) => {
+        if (err) {
+          console.error(err);
+          res.send("Error:\n" + err);
+          return;
+        }
+        const temp = parseInt(
+          stdout.split("\n")[1].trim().slice(0, -2) / 10 - 273.15
+        );
+        res.json(temp + "°C");
+      }
+    );
+  } else {
+    exec(
+      "cat /sys/class/thermal/thermal_zone0/temp",
+      (err, stdout, stderr) => {
+        if (err) {
+          console.error(err);
+          res.send("Error:\n" + err);
+          return;
+        }
+        const temp = parseInt(stdout.trim()) / 1000;
+        res.json(temp + "°C");
+      }
+    );
+  }
+});
+
 app.get("/connecteddrives", (req, res) => {
   if (os.platform() === "win32") {
     exec("fsutil fsinfo drives", (err, stdout, stderr) => {
