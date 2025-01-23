@@ -175,7 +175,7 @@ async function main() {
     }
 
     ping();
-    setInterval(ping, 10000);
+    setInterval(ping, 30000);
 }
 
 main();
