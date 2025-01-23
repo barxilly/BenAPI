@@ -17,7 +17,17 @@ const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 60,
     message: "You've been rate limited. Wtf are you even doing?",
-    keyGenerator: (req) => req.headers["cf-connecting-ip"] || req.ip,
+    keyGenerator: (req) => {
+        const apiKey = req.headers["authorization"] ? .split(" ")[1];
+        if (apiKey && process.env.APP_KEYS.split(",").includes(apiKey)) {
+            return apiKey; // Use API key as the unique key
+        }
+        return req.headers["cf-connecting-ip"] || req.ip;
+    },
+    skip: (req) => {
+        const apiKey = req.headers["authorization"] ? .split(" ")[1];
+        return apiKey && process.env.APP_KEYS.split(",").includes(apiKey);
+    }
 });
 
 app.use(limiter);

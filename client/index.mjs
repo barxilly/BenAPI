@@ -155,11 +155,13 @@ async function main() {
                                 status: status
                             }, {
                                 headers: {
-                                    Authorization: 'Bearer ' + apiKey
+                                    Authorization: 'Bearer ' + apiKey,
+                                    status: status
                                 }
                             })
                             .then((res) => {
-                                log(chalk.greenBright("Status updated: " + status));
+                                log(chalk.greenBright("Status updated: "));
+                                log(chalk.greenBright(JSON.stringify(res.data)));
                             })
                             .catch((e) => {
                                 error("Failed to update status: " + e);
