@@ -366,6 +366,7 @@ app.post("/status", (req, res) => {
     try {
       const status = {
         status: req.headers.status,
+        updated: new Date(),
       };
       fs.writeFile("./status.json", JSON.stringify(status), (err) => {
         if (err) {
