@@ -103,7 +103,17 @@ app.get("/status", (req, res) => {
       res.send("Error:\n" + err);
       return;
     } else {
-      res.json(JSON.parse(data));
+      const statusData = JSON.parse(data);
+      const lastUpdated = new Date(statusData.updated);
+      const now = new Date();
+      const diffMinutes = (now - lastUpdated) / (1000 * 60);
+
+      if (diffMinutes > 30) {
+        statusData.status = "Offline";
+        statusData.updated = now;
+      }
+
+      res.json(statusData);
     }
   });
 });
