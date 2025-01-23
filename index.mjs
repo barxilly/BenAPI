@@ -328,7 +328,7 @@ app.post("/status", (req, res) => {
             fs.writeFile("./status.json", JSON.stringify(status), (err) => {
                 if (err) {
                     console.error(err);
-                    res.send("Error:\n" + err);
+                    res.status(400).send("Error:\n" + err);
                     return;
                 }
                 res.json("Status set to " + req.headers.status);

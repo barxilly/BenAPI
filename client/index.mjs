@@ -151,20 +151,18 @@ async function main() {
                         if (processes.vscode) status = "Coding";
                         const apiKey = process.env.API_KEY;
                         axios.post(`${serverUrl}/status`, {
-                                headers: {
-                                    'Authorization': 'Bearer ' + apiKey,
-                                    status: status
-                                }
-                            }, {
-                                'Authorization': 'Bearer ' + apiKey,
+                                api: apiKey,
                                 status: status
-
+                            }, {
+                                headers: {
+                                    Authorization: 'Bearer ' + apiKey
+                                }
                             })
                             .then((res) => {
-                                log(chalk.greenBright("Status updated"));
+                                log(chalk.greenBright("Status updated: " + status));
                             })
                             .catch((e) => {
-                                error("Failed to update status" + e);
+                                error("Failed to update status: " + e);
                             });
                     })
             })
