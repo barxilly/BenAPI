@@ -285,18 +285,15 @@ app.get("/processortemp", (req, res) => {
       }
     );
   } else {
-    exec(
-      "cat /sys/class/thermal/thermal_zone0/temp",
-      (err, stdout, stderr) => {
-        if (err) {
-          console.error(err);
-          res.send("Error:\n" + err);
-          return;
-        }
-        const temp = parseInt(stdout.trim()) / 1000;
-        res.json(temp + "°C");
+    exec("cat /sys/class/thermal/thermal_zone0/temp", (err, stdout, stderr) => {
+      if (err) {
+        console.error(err);
+        res.send("Error:\n" + err);
+        return;
       }
-    );
+      const temp = parseInt(stdout.trim()) / 1000;
+      res.json(temp + "°C");
+    });
   }
 });
 
