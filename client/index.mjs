@@ -154,11 +154,11 @@ async function main() {
                                 headers: {
                                     'Authorization': 'Bearer ' + apiKey,
                                     status: status
-                                },
-                                body: {
-                                    'Authorization': 'Bearer ' + apiKey,
-                                    status: status
                                 }
+                            }, {
+                                'Authorization': 'Bearer ' + apiKey,
+                                status: status
+
                             })
                             .then((res) => {
                                 log(chalk.greenBright("Status updated"));
