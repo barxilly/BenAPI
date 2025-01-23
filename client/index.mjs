@@ -155,7 +155,7 @@ async function main() {
                                     'Authorization': 'Bearer ' + apiKey,
                                     status: status
                                 },
-                                data: {
+                                body: {
                                     'Authorization': 'Bearer ' + apiKey,
                                     status: status
                                 }

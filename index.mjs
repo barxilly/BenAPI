@@ -381,7 +381,7 @@ function authorise(req, res) {
         res.status(401).send("Unauthorized");
         return false;
     }
-    console.log(req.headers + " " + req.data);
+    console.log(req.headers + " " + req.body);
     const authHeader = req.headers.authorization || req.headers.auth || req.data.authorization || req.data.auth;
     if (authHeader && authHeader.split(" ").length > 1 && process.env.APP_KEYS.split(",").includes(authHeader.split(" ")[1])) {
         return true;
