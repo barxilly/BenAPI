@@ -247,7 +247,7 @@ async function main() {
           if (processes.minecraft) status = "Playing Minecraft";
           else if (processes.vscode) status = "Coding";
           else if (processes.photoshop) status = "Designing";
-          else if (processes.chrome) status = "Browsing";
+          else if (processes.chrome) status = "Learning";
           else if (processes.ssh) status = "SSH'd into a server";
           else if (processes.terminal) status = "PowerShellin'";
           else if (processes.appleMusic) status = "Listening to Apple Music";
