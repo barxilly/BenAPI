@@ -90,7 +90,7 @@ app.get("/", (req, res) => {
         chalk.white(" - Say something. Use request header 'message'\n") +
         chalk.redBright("POST ") +
         chalk.yellow("/region") +
-        chalk.white(" - Set Ben's current region (Private)\n")
+        chalk.white(" - Set Ben's current region (Private)\n"),
     );
   }
 });
@@ -182,12 +182,12 @@ app.get("/wifispeed", (req, res) => {
             if (err) {
               console.error(err);
             }
-          }
+          },
         );
 
         // Return as content_type: application/json
         res.status(200).json(result);
-      }
+      },
     );
   });
 });
@@ -229,7 +229,7 @@ app.get("/weather", (req, res) => {
           .get(
             `http://api.weatherapi.com/v1/current.json?key=${
               process.env.WEATHER_API_KEY
-            }&q=${JSON.parse(data).region}`
+            }&q=${JSON.parse(data).region}`,
           )
           .then((response) => {
             const result = {
@@ -246,7 +246,7 @@ app.get("/weather", (req, res) => {
                 if (err) {
                   console.error(err);
                 }
-              }
+              },
             );
 
             res.status(200).json(result);
@@ -279,10 +279,10 @@ app.get("/processortemp", (req, res) => {
           return;
         }
         const temp = parseInt(
-          stdout.split("\n")[1].trim().slice(0, -2) / 10 - 273.15
+          stdout.split("\n")[1].trim().slice(0, -2) / 10 - 273.15,
         );
         res.json(temp + "°C");
-      }
+      },
     );
   } else {
     exec("cat /sys/class/thermal/thermal_zone0/temp", (err, stdout, stderr) => {
@@ -308,7 +308,7 @@ app.get("/connecteddrives", (req, res) => {
       const drives = stdout.split("Drives: ")[1].replace(
         "\\ ",
         `\\
-`
+`,
       );
       res.json(drives.replace(" \r", "").split("\n").slice(0, -1));
     });
@@ -417,7 +417,7 @@ app.post("/saysomething", (req, res) => {
       .status(400)
       .send(
         "Error setting message. Make sure the header 'message' is set. Err:\n",
-        err
+        err,
       );
   }
 });

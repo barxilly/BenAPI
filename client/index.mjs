@@ -18,7 +18,7 @@ const execAsync = (command) => {
         } else {
           resolve({ stdout, stderr });
         }
-      }
+      },
     );
   });
 };
@@ -265,7 +265,7 @@ async function main() {
                   Authorization: "Bearer " + apiKey,
                   status: status,
                 },
-              }
+              },
             )
             .then((res) => {
               log(chalk.greenBright("Status updated: "));
